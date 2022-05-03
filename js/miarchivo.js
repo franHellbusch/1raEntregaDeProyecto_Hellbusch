@@ -1,12 +1,14 @@
 // definiendo variables
-let nombre
-let apellido
+let nombre;
+let apellido;
 
-const productos = []
-let carrito = ""
-let total = 0
-const todosProductos = []
-let catalogo = ""
+const productos = [];
+let carrito = "";
+let total = 0;
+const todosProductos = [];
+let catalogo = "";
+let ganador = "Campera de abrigo";
+let mensajeGanador = "";
 // definiendo funcion de bienvenida
 function bienvenida() {
     nombre = prompt("Ingrese su nombre");
@@ -127,9 +129,23 @@ function todosLosProductos() {
     }
 }
 
+// definiendo funcion de sorteo
+function sorteo() {
+    alert("Esta participando por el sorteo de una campera de abrigo, el sorteo conciste en un numero aleatorio del 1 al 10, en caso del numero ser 2 o 9 usted ganara, SUERTE!! \nPresione aceptar para realizar el sorteo");
+    alert("realizando sorteo...");
+    let numero = Math.round(Math.random() * 10);
+    if (numero == 2 || numero == 9) {
+        alert(`GANO EL SORTEO: Su numero es ${numero} \nSe guardo su producto, debe comprar algo para que se efectue el envio del sorteo`);
+        return mensajeGanador = `\nSorteo: ${ganador}`;
+    } else {
+        alert(`No obtuvo ningun premio siga participando: su numero es ${numero}`);
+    }
+    compra()
+}
+
 // definiendo funcion de compra
 function compra(){
-    let entrada1 = prompt("Nuestro catalogo muestra estos productos, cual desea comprar? \n 1| Remeras \n 2| Pantalones \n 3| Buzos \n 4| Mostrar todos los productos \n 5| Ver carrito/salir");
+    let entrada1 = prompt("Nuestro catalogo muestra estos productos, cual desea comprar? \n 1| Remeras \n 2| Pantalones \n 3| Buzos \n 4| Mostrar todos los productos \n 5| Sorteo\n 6| Ver carrito/salir");
     if (entrada1 == "1") {
         remeras();
     } else if (entrada1 == "2"){
@@ -140,7 +156,9 @@ function compra(){
         ordenarProductos()
         todosLosProductos()
     } else if (entrada1 == "5") {
-        alert("no se agrego nada a su carrito")
+        sorteo()
+    } else if (entrada1 == "6") {
+        alert("no se agrego nada a su carrito");
     } else {
         alert("Error: ingrese un numero");
         compra();
@@ -152,7 +170,7 @@ function carritoCompra() {
     for (i = 0; i < productos.length; i++){
         carrito += `Nombre: ${productos[i].nombre}, Precio: ${productos[i].precio} ID: ${productos[i].id} Posicion: ${i}\n`;
     }
-    total = productos.reduce((acc, el) => acc + el.precio, 0)
+    total = productos.reduce((acc, el) => acc + el.precio, 0);
 }
 
 // definiendo funcion continuar
@@ -221,7 +239,7 @@ function verCarrito(compra) {
     if (productos.length === 0){
         compraRealizada()
     }else{
-        alert(`Su carrito contiene los siguientes productos: \n${compra}\nY el total es: $${total}\nProsiga con su compra.`);
+        alert(`Su carrito contiene los siguientes productos: \n${compra}\nY el total es: $${total}${mensajeGanador}\nProsiga con su compra.`);
         finalizar()
     }
 }
